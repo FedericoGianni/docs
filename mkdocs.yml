@@ -1,0 +1,84 @@
+site_name: Forbay Homelab Docs
+site_url: https://federicogianni.github.io/docs/
+
+theme:
+  name: material
+  palette:
+    # --- Palette 1: Default (Light Mode) ---
+    - scheme: default
+      primary: black
+      accent: green
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+        
+    # --- Palette 2: Slate (Dark Mode) ---
+    - scheme: slate
+      primary: black
+      accent: green
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+        
+  font:
+    text: !ENV [DOCS_FONT, "Inter"]
+    code: !ENV [DOCS_CODE_FONT, "Fira Code"]
+    
+  features:
+    - navigation.top
+    - navigation.expand
+    - content.code.annotate
+    - content.code.copy
+    - toc.integrate
+    - header.autohide
+
+nav:
+  - Home: index.md
+  - Hardware: 1-hardware.md
+  - Hypervisor: 2-hypervisor.md
+  - Network: 3-network.md
+  - IaC, Automation & GitOps: 4-iac.md
+  - Kubernetes: 10-kubernetes.md
+  - Update: 5-update.md
+  - Storage & Backup: 6-storage-backup.md
+  - Observability: 7-observability.md
+  - Security: 8-security.md
+  - Disaster Recovery: 9-disaster-recovery.md
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/terminal.css
+
+extra_javascript:
+  - https://unpkg.com/mermaid@12.2.0/dist/mermaid.min.js
+  - javascripts/mermaid-theme.js
+  - javascripts/mermaid-zoom.js
+
+hooks:
+  - scripts/mkdocs_hook.py
+
+plugins:
+  - search
+  - awesome-pages
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+  - pymdownx.details
+
+extra:
+  generator: false

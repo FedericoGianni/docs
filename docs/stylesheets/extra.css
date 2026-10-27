@@ -1,0 +1,60 @@
+.mermaid-wrap {
+  position: relative;
+  margin: 1rem 0 1.5rem;
+}
+
+.mermaid-tools {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 0.4rem;
+}
+
+.mermaid-tools button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.25rem;
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  cursor: pointer;
+}
+
+.mermaid-tools button:hover {
+  border-color: var(--md-accent-fg-color);
+  color: var(--md-accent-fg-color);
+}
+
+.mermaid-tools svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+}
+
+.mermaid-stage {
+  overflow: auto;
+}
+
+.mermaid-wrap:fullscreen {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: var(--md-default-bg-color);
+  overflow: hidden;
+}
+
+.mermaid-wrap:fullscreen .mermaid-stage {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.mermaid-wrap:fullscreen .mermaid-stage.is-panning {
+  cursor: grabbing;
+}

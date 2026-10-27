@@ -1,0 +1,19 @@
+image: python:3.12
+
+stages:
+  - build
+
+pages:
+  stage: build
+  
+  before_script:
+    - pip install --upgrade pip
+    - pip install -r requirements.txt
+    
+  script:
+    - python3 scripts/check.py
+    - mkdocs build -d public
+    
+  artifacts:
+    paths:
+      - public
