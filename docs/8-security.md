@@ -19,7 +19,7 @@ The defense combines strict firewalling with internal network isolation using VL
 | Security Layer | Site | Component | Status | Mechanism | Goal |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Public Web Access** | Main | **Cloudflare Proxy + Firewall** | 🟢 | HTTPS proxied via Cloudflare; firewall only allows Cloudflare IP ranges → :443 | Perimeter defense + DDoS/WAF |
-| **Public Web Access** | DR | **Cloudflare Tunnel** | 🟢 | Outbound QUIC tunnel to Cloudflare, bypassing carrier-grade NAT (CGNAT) | Same Cloudflare WAF/DDoS protection without a public IP |
+| **Public Web Access** | Remote | **Cloudflare Tunnel** | 🟢 | Outbound QUIC tunnel to Cloudflare, bypassing carrier-grade NAT (CGNAT) | Same Cloudflare WAF/DDoS protection without a public IP |
 
 #### Internal Isolation
 
