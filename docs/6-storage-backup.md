@@ -40,7 +40,7 @@ To reproduce: run `fio nfs-bench.fio` from inside each share (on host) or its NF
 | -------------------- | ----------- | --------- | --------------------- | ------------- | --------------------------------- |
 | gdrive to `/FORBAY`        | rclone      | Automatic | Daily 12:00 & 20:00  | Mirror (sync) | gdrive → NAS local                |
 | `/FORBAY` to ext HDD      | restic      | Automatic | Daily 09:00  | 6 months     | NAS → External USB HDD            |
-| ext HDD to remote DR | restic copy | Automatic | Daily 12:00 | Mirror (sync) | External USB HDD → {{ hw.host7 }} (remote) |
+| ext HDD to remote DR | restic copy | Automatic | Daily 12:00 | Append-only copy | External USB HDD → {{ hw.host7 }} (remote) |
 
 #### /FORBAY_FAST
 
@@ -64,7 +64,7 @@ To reproduce: run `fio nfs-bench.fio` from inside each share (on host) or its NF
 
 | Task                                | Tool / Method | Type      | Schedule   | Destination |
 | ----------------------------------- | ------------- | --------- | ---------- | ----------- |
-| Proxmox config backup (e.g. `/etc`) | Custom Script | Automatic | cron.daily | `/FORBAY`     |
+| Proxmox config backup (e.g. `/etc`) | Custom Script | Automatic | 09:00 daily | `/FORBAY`     |
 
 ---
 
@@ -78,5 +78,5 @@ To reproduce: run `fio nfs-bench.fio` from inside each share (on host) or its NF
 
 | Task              | Tool                         | Type      | Schedule           | Destination     |
 | :---------------- | :--------------------------- | :-------- | :----------------- | :-------------- |
-| Cluster resources | Velero + Node Agent (Restic) | Automatic | Every day at 10:00 | MinIO S3 Bucket |
+| Cluster resources | Velero + Node Agent (Kopia) | Automatic | Every day at 10:00 | MinIO S3 Bucket |
 | etcd snapshots    | RKE2 CronJob                 | Automatic | Every 30 min       | MinIO S3 Bucket |
