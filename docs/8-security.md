@@ -30,7 +30,7 @@ The defense combines strict firewalling with internal network isolation using VL
 
 | Security Layer | Component | Status | Mechanism | Goal |
 | :--- | :--- | :--- | :--- | :--- |
-| **Network Visibility** | **Suricata** | 🟢 | Router sends periodically .pcap exports to Suricata. Suricata analyze alerts, which are visible in SIEM dashboard. | Detect and, eventually, prevent known malicious traffic patterns. |
+| **Network Visibility** | **Suricata** | 🟢 | Router mirrors traffic via TZSP; Suricata replays the captured pcap files and forwards alerts to Wazuh. | Detect known malicious traffic patterns (IDS). |
 
 ---
 
@@ -63,10 +63,10 @@ The defense combines strict firewalling with internal network isolation using VL
 
 | Security Layer | Component | Status | Mechanism | Goal |
 | :--- | :--- | :--- | :--- | :--- |
-| **Cluster Patching** | **K3s Upgrade Controller** | 🟢 | Automated rolling updates of K3s control plane and agent nodes. | Reduces the **attack surface** by patching Kubernetes CVEs safely and sequentially. |
+| **Cluster Patching** | **RKE2 Upgrade Controller** | 🟢 | Automated rolling updates of RKE2 control plane and agent nodes. | Reduces the **attack surface** by patching Kubernetes CVEs safely and sequentially. |
 | **Secret Management** | **Bitwarden Secrets Operator** | 🟢 | Inject secrets into Kubernetes from a central, secure vault. | Prevents sensitive data from being committed to the Git repository (Secret zero issue). |
 | **Runtime Vulnerability Scan** | **Trivy Operator** | 🟢 | Scans **running container images** and configurations directly within the cluster. | Identifies and reports vulnerabilities in workloads currently exposed in the production environment. |
 | **Image Vulnerability Scan** | **Trivy Harbor Scanner** | 🟢 | Scans **stored container images** in the private registry (Harbor) upon push. | Prevents known vulnerable images from being deployed into the cluster (Shift Left Security). |
-| **Network Segmentation** | **Cilium Network Policies** | 🟢 | Enforces **Default-Deny** policy for traffic between namespaces (pod-to-pod). | Limits lateral movement and the **blast radius** of a compromise. |
+| **Network Segmentation** | **Cilium Network Policies** | 🟢 | Enforces **Default-Deny** ingress for traffic between namespaces (pod-to-pod). | Limits lateral movement and the **blast radius** of a compromise. |
 | **Pod Network Encryption** | **Cilium WireGuard** | 🟢 | L3/L4 kernel encapsulation via `cilium_wg0` | Encrypt cross-node packet payload in transit |
-| **Workload Identity** | **Cilium mTLS** | 🟢 | SPIFFE SVID verification via SPIRE; mTLS enforced on cross-namespace ingress rules with kube-system exempt for bootstrapping | Authorize TCP streams based on service identity |
+| **Workload Identity** | **Cilium mTLS** | 🟢 | SPIFFE SVID verification via SPIRE; mTLS required for cross-namespace ingress from `traefik`, `monitoring`, `cert-manager` and `argocd`, with `kube-system` and `cilium-spire` exempt for bootstrapping. | Authorize TCP streams based on service identity |
