@@ -1,12 +1,8 @@
 # Security
 
-> No Swiss cheese was harmed in the making of this architecture.
-
 The security strategy is multi-layered, focusing on perimeter defense, network segmentation, visibility and threat prevention and detection, to protect the whole infrastructure.
 
 Each layer acts as a slice of Swiss cheese; the goal is to ensure that the individual holes (vulnerabilities) in these multiple layers never align, preventing a threat from creating an uninterrupted path to an exploit.
-
-![Swiss cheese model — defense in depth](assets/images/security/1.png)
 
 ***
 

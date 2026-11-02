@@ -1,7 +1,5 @@
 # Observability
 
-> Storing 500GB of debug logs just to search `grep "error"` twice a year.
-
 ## Monitoring
 
 | # | Place | Purpose | Tools | Flow |

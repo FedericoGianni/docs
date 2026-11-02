@@ -1,7 +1,5 @@
 # Storage & Backup
 
-> Wait, you guys are getting backups?!
-
 This document summarizes the storage layout and backup strategy across my infrastructure. It follows the 3-2-1 backup rule, with an off-site copy to another location.
 
 ---

@@ -1,7 +1,5 @@
 # Update
 
-> It was just a patch update, what could possibly go wrong?
-
 This document summarizes the update approach for devices and services across the infrastructure.
 
 ---
