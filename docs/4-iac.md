@@ -55,3 +55,15 @@ flowchart LR
 | :--- | :--- | :--- |
 | **GitLab** | Primary repository | Hosts IaC (OpenTofu), day-2 host configuration (Ansible), and ArgoCD configuration, plus these docs. |
 | **GitHub** | Mirror repository | Automatically synced from GitLab for redundancy and visibility. |
+
+### GitLab Runners
+
+Group-level runners in the `forbay` GitLab group. Every project in the group can use them by default; jobs select one with `tags`.
+
+| Runner | Host | Tags | Untagged | Executor | Privileged | Managed by |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Main site | `{{ hw.host6 }}` | `bare-metal`, `dind` | No | Docker | Yes | Ansible |
+| Remote site | `{{ hw.host4 }}` | `bare-metal` | No | Docker | No | Ansible |
+| Kubernetes | `{{ hw.cluster1 }}` | `k8s` | Yes | Kubernetes | — | ArgoCD |
+
+`bare-metal` runs on either host; `dind` is only on the main-site runner (used when the pipeline needs to be able to create other containers: docker-in-docker)
