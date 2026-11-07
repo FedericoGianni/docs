@@ -91,15 +91,18 @@
 ### Static IP Reservations for Remote Site Machines
 
 Machines running on {{ hw.host4 }} (SO site) are connected via WireGuard to the main site's
-internal subnets. They use statically-reserved IPs in the `.16-.23` range to
-avoid DHCP conflicts:
+internal subnets. The SO site has no VLANs: {{ hw.host4 }} bridges everything on a flat
+`{{ net.lan_remote }}` LAN and carries the routed ranges below as secondary addresses on `vmbr0`.
 
-| Subnet | Reserved | Purpose | Current hosts |
-|--------|----------|---------|---------------|
-| `{{ net.trusted }}` | `.16/28` | SO site services (OpenClaw, etc.) | `.18` = openclaw-forbay CT |
-| `{{ net.k8s }}` | `.16/28` | SO site K3s nodes | `.18` = forbay-k8s-so-master-1 CT |
+| Subnet | Routed range | Purpose | Current hosts |
+|--------|--------------|---------|---------------|
+| `{{ net.trusted }}` | `.16/29` | SO site services (OpenClaw, etc.) | `.18` = openclaw-forbay CT |
+| `{{ net.k8s }}` | `.200/29` | SO site K3s nodes | `.201` = forbay-k8s-so-master-1 CT |
 
-These IPs are advertised via Tailscale subnet routing ({{ hw.host4 }}'s routes: `{{ net.remote_trusted }}`, `{{ net.remote_k8s }}`).
+{{ hw.brand_router }} reaches these over the WireGuard tunnel (`forbay-wg`) with static routes via
+{{ hw.host4 }} and advertises `{{ net.remote_trusted }}` / `{{ net.remote_k8s }}` through
+{{ hw.host4 }}'s Tailscale subnet router for tailnet peers. VLAN 40 exists only on the main-site
+{{ hw.brand_router }}; SO-site traffic is routed, never VLAN-tagged.
 
 ### Remote Access
 
