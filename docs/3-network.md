@@ -139,10 +139,10 @@ flowchart LR
     CLIENT["Client"] --> ROUTER["Router<br/>cache check"]
     ROUTER -->|reply| CLIENT
     ROUTER -->|uncached| PIHOLE1["Pi-hole 1<br/>cache / upstream"]
-    PIHOLE1 -->|reply| CLIENT
+    PIHOLE1 -->|reply| ROUTER
     PIHOLE1 -->|unreachable| PIHOLE2["Pi-hole 2<br/>cache / upstream"]
-    PIHOLE2 -->|reply| CLIENT
+    PIHOLE2 -->|reply| ROUTER
     PIHOLE2 -->|unreachable| FALLBACK["Public DNS fallback"]
-    FALLBACK -->|reply| CLIENT
+    FALLBACK -->|reply| ROUTER
 ```
 
