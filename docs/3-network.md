@@ -101,10 +101,9 @@ internal subnets. The SO site has no VLANs: {{ hw.host4 }} bridges everything on
 
 {{ hw.brand_router }} reaches these over the WireGuard tunnel (`forbay-wg`) with static routes via
 {{ hw.host4 }} and advertises `{{ net.remote_trusted }}` / `{{ net.remote_k8s }}` through
-{{ hw.host4 }}'s Tailscale subnet router for tailnet peers. {{ hw.host4 }} also masquerades these
-ranges, so on the main site they arrive as {{ hw.host4 }}'s WireGuard address in `{{ net.vpn }}`:
-the {{ hw.brand_router }} firewall applies **VPN** rules, not Trusted VLAN 40 rules. VLAN 40 exists
-only on the main-site {{ hw.brand_router }}.
+{{ hw.host4 }}'s Tailscale subnet router for tailnet peers. {{ hw.host4 }} preserves the source
+addresses toward the tunnel, so the {{ hw.brand_router }}'s **VLAN 40 address rules** apply.
+VLAN 40 exists only on the main-site {{ hw.brand_router }}.
 
 ### Remote Access
 
