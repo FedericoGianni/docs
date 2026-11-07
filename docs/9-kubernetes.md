@@ -38,4 +38,4 @@
 | [Storage & Backup](6-storage-backup.md) | NFS StorageClasses, Velero |
 | [Observability](7-observability.md) | Metrics, logs, traces |
 | [Security](8-security.md) | Cilium policies/WireGuard/mTLS, Kyverno, Trivy, secrets |
-| [Disaster Recovery](9-disaster-recovery.md) | Cluster recovery |
+| [Disaster Recovery](11-disaster-recovery.md) | Cluster recovery |
