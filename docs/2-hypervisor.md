@@ -44,7 +44,7 @@
    ansible-playbook main.yml --limit pve
    ```
 
-   Automates: NFS mounts (`/FORBAY`, `/FORBAY_FAST`, `/FORBAY_EPHEMERAL` — see [Storage & Backup](6-storage-backup.md)), disk optimization (noatime, tmpfs, swappiness=1, journald→RAM), log2ram, [unattended upgrades](5-update.md), LXC auto-updater, `/etc` backup, [Alloy](7-observability.md) + healthchecks + Wazuh.
+   Automates: NFS mounts (`/FORBAY`, `/FORBAY_FAST`, `/FORBAY_EPHEMERAL` — see [Storage & Backup](7-storage-backup.md)), disk optimization (noatime, tmpfs, swappiness=1, journald→RAM), log2ram, [unattended upgrades](6-update.md), LXC auto-updater, `/etc` backup, [Alloy](9-observability.md) + healthchecks + Wazuh.
 
 ## PBS Setup
 
@@ -59,4 +59,4 @@
    ansible-playbook main.yml --limit pbs
    ```
 
-   Automates: NFS mount (`{{ ip.backup }}:/FORBAY → /mnt/pve/NFS`), [Alloy](7-observability.md).
+   Automates: NFS mount (`{{ ip.backup }}:/FORBAY → /mnt/pve/NFS`), [Alloy](9-observability.md).

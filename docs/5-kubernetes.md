@@ -34,8 +34,8 @@
 | :--- | :--- |
 | [Network](3-network.md) | Kubernetes VLAN and remote-site subnet |
 | [IaC, Automation & GitOps](4-iac.md) | OpenTofu provisioning, Ansible day-2, GitOps |
-| [Update](5-update.md) | Cluster and application upgrades |
-| [Storage & Backup](6-storage-backup.md) | NFS StorageClasses, Velero |
-| [Observability](7-observability.md) | Metrics, logs, traces |
-| [Security](8-security.md) | Cilium policies/WireGuard/mTLS, Kyverno, Trivy, secrets |
-| [Disaster Recovery](11-disaster-recovery.md) | Cluster recovery |
+| [Update](6-update.md) | Cluster and application upgrades |
+| [Storage & Backup](7-storage-backup.md) | NFS StorageClasses, Velero |
+| [Disaster Recovery](8-disaster-recovery.md) | Cluster recovery |
+| [Observability](9-observability.md) | Metrics, logs, traces |
+| [Security](10-security.md) | Cilium policies/WireGuard/mTLS, Kyverno, Trivy, secrets |
