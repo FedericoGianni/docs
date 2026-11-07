@@ -24,12 +24,12 @@ This is the central documentation for my homelab.
     Metrics, logs, traces for observability, monitoring and alerting.
 - [Security](8-security.md)
     Security strategies.
-- [Disaster Recovery](9-disaster-recovery.md)
-    DR strategies.
-- [Kubernetes](10-kubernetes.md)
+- [Kubernetes](9-kubernetes.md)
     Cluster platform and components.
-- [AI](11-ai.md)
+- [AI](10-ai.md)
     How AI is leveraged and governed.
+- [Disaster Recovery](11-disaster-recovery.md)
+    DR strategies.
 
 ---
 
