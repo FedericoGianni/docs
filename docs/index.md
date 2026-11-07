@@ -16,8 +16,6 @@ This is the central documentation for my homelab.
     Network topology.
 - [IaC, Automation & GitOps](4-iac.md)
     Infrastructure as Code with OpenTofu, configuration management with Ansible, GitOps with ArgoCD.
-- [Kubernetes](10-kubernetes.md)
-    Cluster platform and components.
 - [Update](5-update.md)
     Update strategies.
 - [Storage & Backup](6-storage-backup.md)
@@ -28,6 +26,11 @@ This is the central documentation for my homelab.
     Security strategies.
 - [Disaster Recovery](9-disaster-recovery.md)
     DR strategies.
+- [Kubernetes](10-kubernetes.md)
+    Cluster platform and components.
+- [AI](11-ai.md)
+    How AI is leveraged and governed.
+
 ---
 
 > This site is automatically generated and deployed via CI/CD. Real values are replaced with scrambled values in public builds.

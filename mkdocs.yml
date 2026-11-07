@@ -43,6 +43,7 @@ nav:
   - Storage & Backup: 6-storage-backup.md
   - Observability: 7-observability.md
   - Security: 8-security.md
+  - AI: 11-ai.md
   - Disaster Recovery: 9-disaster-recovery.md
 
 extra_css:
