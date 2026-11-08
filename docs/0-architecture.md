@@ -8,9 +8,9 @@ flowchart TB
         direction TB
 
         MAIN_WAN["{{ hw.brand_gateway }}<br/>Internet Gateway<br/>{{ ip.gateway }}"]
-        MAIN_ROUTER["{{ hw.brand_router }}<br/>Main Router + Switch<br/>{{ ip.router }}"]
+        MAIN_ROUTER["{{ hw.brand_router }}<br/>Main Router<br/>{{ ip.router }}"]
         MAIN_WAN ---|"WAN"| MAIN_ROUTER
-        SWITCH["{{ hw.switch1 }}"]
+        SWITCH["{{ hw.switch1 }}<br/>Switch"]
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
         RPI5["{{ hw.server3 }}<br/>{{ ip.pi5 }}"]
@@ -50,9 +50,9 @@ flowchart TB
         MAIN_ROUTER --- SWITCH
         SWITCH --- NAS
         SWITCH --- RPI5
-
-
-
+        MAIN_ROUTER --- PVE1
+        MAIN_ROUTER --- PVE2
+        MAIN_ROUTER --- PVE3
     end
 
     INTERNET(("Internet"))
