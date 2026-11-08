@@ -50,9 +50,9 @@ flowchart TB
         MAIN_ROUTER --- SWITCH
         SWITCH --- NAS
         SWITCH --- RPI5
-    
-    
-    
+        MAIN_ROUTER --- PVE1
+        MAIN_ROUTER --- PVE2
+        MAIN_ROUTER --- PVE3
     end
 
     INTERNET(("Internet"))
