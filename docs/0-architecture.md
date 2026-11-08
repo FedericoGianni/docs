@@ -10,6 +10,7 @@ flowchart TB
         MAIN_WAN["{{ hw.brand_gateway }}<br/>Internet Gateway<br/>{{ ip.gateway }}"]
         MAIN_ROUTER["{{ hw.brand_router }}<br/>Main Router + Switch<br/>{{ ip.router }}"]
         MAIN_WAN ---|"WAN"| MAIN_ROUTER
+        SWITCH["{{ hw.switch1 }}"]
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
         RPI5["{{ hw.server3 }}<br/>{{ ip.pi5 }}"]
@@ -46,11 +47,12 @@ flowchart TB
 
         end
 
-        MAIN_ROUTER --- NAS
-        MAIN_ROUTER --- RPI5
-        MAIN_ROUTER --- PVE1
-        MAIN_ROUTER --- PVE2
-        MAIN_ROUTER --- PVE3
+        MAIN_ROUTER --- SWITCH
+        SWITCH --- NAS
+        SWITCH --- RPI5
+
+
+
     end
 
     INTERNET(("Internet"))
@@ -102,7 +104,7 @@ flowchart TB
     class NAS,RPI5,RPI3B baremetal
     class M1,M2,M3,W1,W2,W3,SURICATA,WAZUH,OCI1,OCI2 vm
     class PBS,PVE_EXP,MINIO,POSTGRES,OPENCLAW,CHECKMK_SO,PVE_EXP_SO,K3S_SO lxc
-    class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,REMOTE_SWITCH,INTERNET network
+    class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,REMOTE_SWITCH,INTERNET,SWITCH network
 ```
 
 **Legend**
