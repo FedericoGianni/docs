@@ -13,7 +13,7 @@ flowchart TB
         SWITCH["{{ hw.switch1 }}<br/>Switch"]
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
-        RPI5["{{ hw.server3 }}<br/>{{ ip.pi5 }}"]
+        SBC_MAIN["{{ hw.server3 }}<br/>{{ ip.sbc_main }}"]
 
         subgraph MAIN_PVE["Proxmox VE Cluster"]
             direction LR
@@ -49,7 +49,7 @@ flowchart TB
 
         MAIN_ROUTER --- SWITCH
         SWITCH --- NAS
-        SWITCH --- RPI5
+        SWITCH --- SBC_MAIN
 
 
 
@@ -75,12 +75,12 @@ flowchart TB
                 OPENCLAW ~~~ CHECKMK_SO ~~~ PVE_EXP_SO ~~~ K3S_SO
             end
 
-            RPI3B["{{ hw.server4 }}<br/>{{ ip.pi3b }}"]
+            SBC_REMOTE["{{ hw.server4 }}<br/>{{ ip.sbc_remote }}"]
         end
 
         REMOTE_ROUTER --- REMOTE_SWITCH
         REMOTE_SWITCH --- PVE4
-        REMOTE_SWITCH --- RPI3B
+        REMOTE_SWITCH --- SBC_REMOTE
     end
 
     subgraph CLOUD["CLOUD"]
@@ -91,8 +91,8 @@ flowchart TB
 
     MAIN_WAN --- INTERNET
     INTERNET --- REMOTE_ROUTER
-    PVE4 -.->|"VPN"| MAIN_ROUTER
-    RPI3B -.->|"VPN"| MAIN_ROUTER
+    
+    SBC_REMOTE -.->|"VPN"| MAIN_ROUTER
     OCI1 -.->|"VPN"| MAIN_ROUTER
     OCI2 -.->|"VPN"| MAIN_ROUTER
 
@@ -101,7 +101,7 @@ flowchart TB
     classDef lxc stroke-width:1px
     classDef network stroke-width:2px
 
-    class NAS,RPI5,RPI3B baremetal
+    class NAS,SBC_MAIN,SBC_REMOTE baremetal
     class M1,M2,M3,W1,W2,W3,SURICATA,WAZUH,OCI1,OCI2 vm
     class PBS,PVE_EXP,MINIO,POSTGRES,OPENCLAW,CHECKMK_SO,PVE_EXP_SO,K3S_SO lxc
     class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,REMOTE_SWITCH,INTERNET,SWITCH network
