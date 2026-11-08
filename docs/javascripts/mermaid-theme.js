@@ -13,7 +13,7 @@
       ".nodeLabel,.nodeLabel p,.label{color:var(--md-mermaid-label-fg-color)!important}",
       ".nodeLabel p,.nodeLabel{line-height:1.35!important}",
       "g.cluster[id$='-MAIN'] .cluster-label,g.cluster[id$='-REMOTE'] .cluster-label,g.cluster[id$='-CLOUD'] .cluster-label{font-weight:700!important;font-size:18px!important}",
-      "g.cluster[id$='-MAIN'] .cluster-label span,g.cluster[id$='-REMOTE'] .cluster-label span,g.cluster[id$='-CLOUD'] .cluster-label span{font-weight:700!important;font-size:18px!important}",
+      "g.cluster[id$='-MAIN'] .cluster-label span,g.cluster[id$='-REMOTE'] .cluster-label span,g.cluster[id$='-CLOUD'] .cluster-label span{font-weight:700!important;font-size:18px!important;background:var(--md-default-bg-color);padding:2px 8px;border-radius:4px;display:inline-block}",
       ".edgePath .path,.flowchart-link{stroke:var(--md-mermaid-edge-color)!important}",
       ".edge-pattern-dotted,path.edge-pattern-dotted,.flowchart-link.edge-pattern-dotted{stroke-dasharray:2 4!important;stroke-linecap:round!important}",
       ".edgeLabel,.edgeLabel p{background-color:var(--md-mermaid-label-bg-color)!important;color:var(--md-mermaid-edge-color)!important}",

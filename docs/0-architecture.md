@@ -1,8 +1,6 @@
 # Architecture
 
-> One map of every site, host, and workload.
-
-### Infrastructure architecture
+## Infrastructure architecture
 
 ```mermaid
 flowchart TB
@@ -20,33 +18,39 @@ flowchart TB
             direction LR
 
             subgraph PVE1["pve1 · {{ hw.server1 }}<br/>{{ ip.node1 }}"]
+                direction TB
                 PBS["PBS<br/>{{ ip.pbs }}"]
                 PVE_EXP["PVE Exporter<br/>{{ ip.pve_exp }}"]
                 M1["k8s-master-1<br/>{{ ip.m1 }}"]
                 W1["k8s-worker-1<br/>{{ ip.w1 }}"]
-            end
-
-            subgraph PVE2["pve2 · {{ hw.server1 }}<br/>{{ ip.node2 }}"]
-                M2["k8s-master-2<br/>{{ ip.m2 }}"]
-                W2["k8s-worker-2<br/>{{ ip.w2 }}"]
-                SURICATA["Suricata<br/>{{ ip.suricata }}"]
-                MINIO["MinIO<br/>{{ ip.minio }}"]
+                PBS ~~~ PVE_EXP ~~~ M1 ~~~ W1
             end
 
             subgraph PVE3["pve3 · {{ hw.server1 }}<br/>{{ ip.node3 }}"]
+                direction TB
                 M3["k8s-master-3<br/>{{ ip.m3 }}"]
                 W3["k8s-worker-3<br/>{{ ip.w3 }}"]
                 POSTGRES["PostgreSQL<br/>{{ ip.postgres }}"]
                 WAZUH["Wazuh<br/>{{ ip.wazuh }}"]
+                M3 ~~~ W3 ~~~ POSTGRES ~~~ WAZUH
             end
 
-            PVE1 ~~~ PVE2
-            PVE2 ~~~ PVE3
+            subgraph PVE2["pve2 · {{ hw.server1 }}<br/>{{ ip.node2 }}"]
+                direction TB
+                M2["k8s-master-2<br/>{{ ip.m2 }}"]
+                W2["k8s-worker-2<br/>{{ ip.w2 }}"]
+                SURICATA["Suricata<br/>{{ ip.suricata }}"]
+                MINIO["MinIO<br/>{{ ip.minio }}"]
+                M2 ~~~ W2 ~~~ SURICATA ~~~ MINIO
+            end
+
         end
 
         MAIN_ROUTER --- NAS
         MAIN_ROUTER --- RPI5
-        MAIN_ROUTER --- MAIN_PVE
+        MAIN_ROUTER --- PVE1
+        MAIN_ROUTER --- PVE2
+        MAIN_ROUTER --- PVE3
     end
 
     INTERNET(("Internet"))
@@ -61,17 +65,20 @@ flowchart TB
             direction TB
 
             subgraph PVE4["pve4 · {{ hw.server2 }}<br/>{{ ip.node4 }}"]
+                direction TB
                 OPENCLAW["OpenClaw<br/>{{ ip.openclaw }}"]
                 CHECKMK_SO["Checkmk<br/>{{ ip.checkmk_so }}"]
                 PVE_EXP_SO["PVE Exporter<br/>{{ ip.pve_exp_so }}"]
                 K3S_SO["k8s-single-node<br/>{{ ip.k3s_so }}"]
+                OPENCLAW ~~~ CHECKMK_SO ~~~ PVE_EXP_SO ~~~ K3S_SO
             end
 
             RPI3B["{{ hw.server4 }}<br/>{{ ip.rpi3b }}"]
         end
 
         REMOTE_ROUTER --- REMOTE_SWITCH
-        REMOTE_SWITCH --- REMOTE_LAN
+        REMOTE_SWITCH --- PVE4
+        REMOTE_SWITCH --- RPI3B
     end
 
     subgraph CLOUD["CLOUD"]
