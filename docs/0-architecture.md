@@ -12,12 +12,12 @@ flowchart TB
         MAIN_WAN ---|"WAN"| MAIN_ROUTER
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
-        RPI5["{{ hw.server3 }}<br/>{{ ip.rpi5 }}"]
+        RPI5["{{ hw.server3 }}<br/>{{ ip.pi5 }}"]
 
         subgraph MAIN_PVE["Proxmox VE Cluster"]
             direction LR
 
-            subgraph PVE1["pve1 · {{ hw.server1 }}<br/>{{ ip.node1 }}"]
+            subgraph PVE1["{{ hw.host1 }} · {{ hw.server1 }}<br/>{{ ip.node1 }}"]
                 direction TB
                 PBS["PBS<br/>{{ ip.pbs }}"]
                 PVE_EXP["PVE Exporter<br/>{{ ip.pve_exp }}"]
@@ -26,7 +26,7 @@ flowchart TB
                 PBS ~~~ PVE_EXP ~~~ M1 ~~~ W1
             end
 
-            subgraph PVE3["pve3 · {{ hw.server1 }}<br/>{{ ip.node3 }}"]
+            subgraph PVE3["{{ hw.host3 }} · {{ hw.server1 }}<br/>{{ ip.node3 }}"]
                 direction TB
                 M3["k8s-master-3<br/>{{ ip.m3 }}"]
                 W3["k8s-worker-3<br/>{{ ip.w3 }}"]
@@ -35,7 +35,7 @@ flowchart TB
                 M3 ~~~ W3 ~~~ POSTGRES ~~~ WAZUH
             end
 
-            subgraph PVE2["pve2 · {{ hw.server1 }}<br/>{{ ip.node2 }}"]
+            subgraph PVE2["{{ hw.host2 }} · {{ hw.server1 }}<br/>{{ ip.node2 }}"]
                 direction TB
                 M2["k8s-master-2<br/>{{ ip.m2 }}"]
                 W2["k8s-worker-2<br/>{{ ip.w2 }}"]
@@ -64,7 +64,7 @@ flowchart TB
         subgraph REMOTE_LAN["{{ net.lan_remote }}"]
             direction TB
 
-            subgraph PVE4["pve4 · {{ hw.server2 }}<br/>{{ ip.node4 }}"]
+            subgraph PVE4["{{ hw.host4 }} · {{ hw.server2 }}<br/>{{ ip.node4 }}"]
                 direction TB
                 OPENCLAW["OpenClaw<br/>{{ ip.openclaw }}"]
                 CHECKMK_SO["Checkmk<br/>{{ ip.checkmk_so }}"]
@@ -73,7 +73,7 @@ flowchart TB
                 OPENCLAW ~~~ CHECKMK_SO ~~~ PVE_EXP_SO ~~~ K3S_SO
             end
 
-            RPI3B["{{ hw.server4 }}<br/>{{ ip.rpi3b }}"]
+            RPI3B["{{ hw.server4 }}<br/>{{ ip.pi3b }}"]
         end
 
         REMOTE_ROUTER --- REMOTE_SWITCH

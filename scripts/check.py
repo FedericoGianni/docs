@@ -39,6 +39,7 @@ TLDS = {
 ALLOWED_HOSTS = {
     "ansible.com",
     "caddyserver.com",
+    "chatgpt.com",
     "cloudflare.com",
     "community-scripts.org",
     "debian.org",
@@ -46,6 +47,7 @@ ALLOWED_HOSTS = {
     "example.com",
     "example.org",
     "example.net",
+    "gemini.google.com",
     "github.com",
     "github.io",
     "gitlab.com",
