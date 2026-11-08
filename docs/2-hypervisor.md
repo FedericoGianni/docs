@@ -37,7 +37,7 @@
 
    Adjust IP per node.
 
-5. Configure local ZFS pool (`localZFS`) + replication (see [below](#replication-ha)) [guide](https://www.youtube.com/watch?v=RYENnzHWawI)
+5. Configure local ZFS pool (`localZFS`) + [replication](#replication-ha) [guide](https://www.youtube.com/watch?v=RYENnzHWawI)
 6. Run [ansible](https://gitlab.com/forbay/ansible-config):
 
    ```bash
@@ -63,13 +63,11 @@
 
 ## Replication & HA
 
-Guests live on the local ZFS pool (`localZFS`), replicated by `pvesr` to both peer nodes (incremental `zfs send`, every 2 h). With PVE HA, losing a node restarts its guests on a surviving one — no storage to move, no manual step.
-
-| Guests | Replication | One node goes offline |
+| Site | Hosts | Replication |
 | :--- | :--- | :--- |
-| LXC + VM (HA managed) | active → both peers | restarted on a surviving node |
-| k8s masters/workers | disabled | rescheduled by Kubernetes |
+| Main | pve1-3, clustered | `localZFS` → both peers, so PVE HA restarts a guest on a surviving node (k8s nodes excluded, HA is theirs) |
+| Remote | pve4, standalone | none |
 
 Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` / `pct migrate <vmid> <node> --restart`.
 
-> Replication is not a backup (one window only, [PBS](7-storage-backup.md) covers that). `pve4` is standalone — no replication there.
+> Replication is not a backup — one window only, [PBS](7-storage-backup.md) covers that.
