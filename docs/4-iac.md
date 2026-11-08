@@ -54,7 +54,9 @@ flowchart LR
 | Tool | Role | Notes |
 | :--- | :--- | :--- |
 | **GitLab** | Primary repository | Hosts IaC (OpenTofu), day-2 host configuration (Ansible), and ArgoCD configuration, plus these docs. |
-| **GitHub** | Mirror repository | Automatically synced from GitLab for redundancy and visibility. |
+| **GitHub** | Mirror repository | External sync for visibility and cloud code redundancy. |
+| **Self-hosted GitLab** | TODO. Mirror repository self-hosted | Automated off-site sync for offline disaster recovery and full codebase backups |
+
 
 ### GitLab Runners
 

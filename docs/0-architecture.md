@@ -89,9 +89,9 @@ flowchart TB
 
     MAIN_WAN --- INTERNET
     INTERNET --- REMOTE_ROUTER
-    MAIN_ROUTER -.->|"VPN"| REMOTE_ROUTER
-    MAIN_ROUTER -.->|"VPN"| OCI1
-    MAIN_ROUTER -.->|"VPN"| OCI2
+    REMOTE_ROUTER -.->|"VPN"| MAIN_ROUTER
+    OCI1 -.->|"VPN"| MAIN_ROUTER
+    OCI2 -.->|"VPN"| MAIN_ROUTER
 
     classDef baremetal stroke-width:2px
     classDef vm stroke-width:1px
