@@ -37,7 +37,7 @@
 
    Adjust IP per node.
 
-5. Configure local ZFS pool (`localZFS`) + replication (see [below](#replication-and-migration)) [guide](https://www.youtube.com/watch?v=RYENnzHWawI)
+5. Configure local ZFS pool (`localZFS`) + replication (see [below](#replication-ha)) [guide](https://www.youtube.com/watch?v=RYENnzHWawI)
 6. Run [ansible](https://gitlab.com/forbay/ansible-config):
 
    ```bash
@@ -46,27 +46,18 @@
 
    Automates: NFS mounts (`/FORBAY`, `/FORBAY_FAST`, `/FORBAY_EPHEMERAL` — see [Storage & Backup](7-storage-backup.md)), disk optimization (noatime, tmpfs, swappiness=1, journald→RAM), log2ram, [unattended upgrades](6-update.md), LXC auto-updater, `/etc` backup, [Alloy](9-observability.md) + healthchecks + Wazuh.
 
-## Replication and Migration
+## Replication & HA
 
-`localZFS` is replicated with `pvesr` to **both** peer nodes, so any node can take over any guest without moving a disk. K8s nodes are excluded: their HA comes from Kubernetes itself, not from PVE.
+Guests live on the local ZFS pool (`localZFS`), replicated by `pvesr` to both peer nodes (incremental `zfs send`, every 2 h). With PVE HA, losing a node restarts its guests on a surviving one — no storage to move, no manual step.
 
-| Guest | Runs on | Replicated to |
+| Guests | Replication | One node goes offline |
 | :--- | :--- | :--- |
-| PBS, PVE exporter | pve1 | pve2, pve3 |
-| MinIO, Checkmk, Suricata | pve2 | pve1, pve3 |
-| PostgreSQL, Wazuh | pve3 | pve1, pve2 |
-| k8s masters + workers | pve1-3 | none (replication job disabled) |
+| LXC + VM (HA managed) | active → both peers | restarted on a surviving node |
+| k8s masters/workers | disabled | rescheduled by Kubernetes |
 
-Incremental `zfs send` every 2 h (`*/2:00`), linked with `__replicate_<job>_<epoch>__` snapshots. This is a migration helper, not a backup — retention is one window; [PBS](7-storage-backup.md) is the backup.
+Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` / `pct migrate <vmid> <node> --restart`.
 
-Migrating is then a plain move of the current state:
-
-```bash
-qm migrate <vmid> <node> --with-local-disks --online   # VM
-pct migrate <vmid> <node> --restart                     # LXC (no live migration)
-```
-
-> **Note:** `pve4` (remote site) is standalone, not a cluster member — nothing replicates there.
+> Replication is not a backup (one window only, [PBS](7-storage-backup.md) covers that). `pve4` is standalone — no replication there.
 
 ## PBS Setup
 
