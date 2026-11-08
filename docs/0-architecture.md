@@ -100,9 +100,9 @@ flowchart TB
     INTERNET --- REMOTE_ROUTER
     INTERNET --- CLOUD
     
-    MAIN_ROUTER -.->|"VPN"| SBC_REMOTE
-    MAIN_ROUTER -.->|"VPN"| OCI1
-    MAIN_ROUTER -.->|"VPN"| OCI2
+    SBC_REMOTE -.->|"VPN"| MAIN_ROUTER
+    OCI1 -.->|"VPN"| MAIN_ROUTER
+    OCI2 -.->|"VPN"| MAIN_ROUTER
 
     classDef baremetal stroke-width:2px
     classDef vm stroke-width:1px
