@@ -12,6 +12,7 @@ flowchart TB
         SWITCH["{{ hw.switch1 }}<br/>Switch"]
         MAIN_WAN ---|"WAN"| MAIN_ROUTER
         MAIN_ROUTER --- SWITCH
+        MAIN_WAN ~~~ MAIN_PVE
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
         SBC_MAIN["{{ hw.server3 }}<br/>{{ ip.sbc_main }}"]
@@ -92,12 +93,16 @@ flowchart TB
         OCI2["OCI 2<br/>{{ ip.oci2 }}"]
     end
 
+    %% Main site on top, Internet in the middle, smaller sites in one row below.
     MAIN_WAN --- INTERNET
+    %% Invisible rank link: centers the Internet node and widens the main site.
+    INTERNET ~~~ NAS
     INTERNET --- REMOTE_ROUTER
+    INTERNET --- CLOUD
     
-    SBC_REMOTE -.->|"VPN"| MAIN_ROUTER
-    OCI1 -.->|"VPN"| MAIN_ROUTER
-    OCI2 -.->|"VPN"| MAIN_ROUTER
+    MAIN_ROUTER -.->|"VPN"| SBC_REMOTE
+    MAIN_ROUTER -.->|"VPN"| OCI1
+    MAIN_ROUTER -.->|"VPN"| OCI2
 
     classDef baremetal stroke-width:2px
     classDef vm stroke-width:1px
