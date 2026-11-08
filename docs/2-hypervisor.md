@@ -46,19 +46,6 @@
 
    Automates: NFS mounts (`/FORBAY`, `/FORBAY_FAST`, `/FORBAY_EPHEMERAL` — see [Storage & Backup](7-storage-backup.md)), disk optimization (noatime, tmpfs, swappiness=1, journald→RAM), log2ram, [unattended upgrades](6-update.md), LXC auto-updater, `/etc` backup, [Alloy](9-observability.md) + healthchecks + Wazuh.
 
-## Replication & HA
-
-Guests live on the local ZFS pool (`localZFS`), replicated by `pvesr` to both peer nodes (incremental `zfs send`, every 2 h). With PVE HA, losing a node restarts its guests on a surviving one — no storage to move, no manual step.
-
-| Guests | Replication | One node goes offline |
-| :--- | :--- | :--- |
-| LXC + VM (HA managed) | active → both peers | restarted on a surviving node |
-| k8s masters/workers | disabled | rescheduled by Kubernetes |
-
-Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` / `pct migrate <vmid> <node> --restart`.
-
-> Replication is not a backup (one window only, [PBS](7-storage-backup.md) covers that). `pve4` is standalone — no replication there.
-
 ## PBS Setup
 
 1. Install [PBS](https://www.proxmox.com/en/downloads/proxmox-backup-server)
@@ -73,3 +60,16 @@ Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` 
    ```
 
    Automates: NFS mount (`{{ ip.backup }}:/FORBAY → /mnt/pve/NFS`), [Alloy](9-observability.md).
+
+## Replication & HA
+
+Guests live on the local ZFS pool (`localZFS`), replicated by `pvesr` to both peer nodes (incremental `zfs send`, every 2 h). With PVE HA, losing a node restarts its guests on a surviving one — no storage to move, no manual step.
+
+| Guests | Replication | One node goes offline |
+| :--- | :--- | :--- |
+| LXC + VM (HA managed) | active → both peers | restarted on a surviving node |
+| k8s masters/workers | disabled | rescheduled by Kubernetes |
+
+Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` / `pct migrate <vmid> <node> --restart`.
+
+> Replication is not a backup (one window only, [PBS](7-storage-backup.md) covers that). `pve4` is standalone — no replication there.
