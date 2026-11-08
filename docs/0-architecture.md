@@ -89,7 +89,8 @@ flowchart TB
 
     MAIN_WAN --- INTERNET
     INTERNET --- REMOTE_ROUTER
-    REMOTE_ROUTER -.->|"VPN"| MAIN_ROUTER
+    PVE4 -.->|"VPN"| MAIN_ROUTER
+    RPI3B -.->|"VPN"| MAIN_ROUTER
     OCI1 -.->|"VPN"| MAIN_ROUTER
     OCI2 -.->|"VPN"| MAIN_ROUTER
 
