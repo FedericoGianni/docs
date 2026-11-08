@@ -9,8 +9,9 @@ flowchart TB
 
         MAIN_WAN["{{ hw.brand_gateway }}<br/>Internet Gateway<br/>{{ ip.gateway }}"]
         MAIN_ROUTER["{{ hw.brand_router }}<br/>Main Router<br/>{{ ip.router }}"]
-        MAIN_WAN ---|"WAN"| MAIN_ROUTER
         SWITCH["{{ hw.switch1 }}<br/>Switch"]
+        MAIN_WAN ---|"WAN"| MAIN_ROUTER
+        MAIN_ROUTER --- SWITCH
 
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
         SBC_MAIN["{{ hw.server3 }}<br/>{{ ip.sbc_main }}"]
@@ -47,11 +48,13 @@ flowchart TB
 
         end
 
-        MAIN_ROUTER --- SWITCH
+        %% Keep network devices above the cluster and storage nodes.
+        SWITCH ~~~ MAIN_PVE
+        MAIN_ROUTER --- PVE1
+        MAIN_ROUTER --- PVE2
+        MAIN_ROUTER --- PVE3
         SWITCH --- NAS
         SWITCH --- SBC_MAIN
-
-
 
     end
 
