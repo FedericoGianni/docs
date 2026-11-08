@@ -65,9 +65,7 @@
 
 | Site | Hosts | Replication |
 | :--- | :--- | :--- |
-| Main | pve1-3, clustered | `localZFS` → both peers, so PVE HA restarts a guest on a surviving node (k8s nodes excluded, HA is theirs) |
-| Remote | pve4, standalone | none |
-
-Manual move when needed: `qm migrate <vmid> <node> --with-local-disks --online` / `pct migrate <vmid> <node> --restart`.
+| Main | {{ hw.host1 }}, {{ hw.host2 }}, {{ hw.host3 }} | clustered: `localZFS` replicated to both peers, so losing a node restarts its guests on a survivor; k8s nodes excluded (HA by Kubernetes) |
+| Remote | {{ hw.host4 }} | standalone: none |
 
 > Replication is not a backup — one window only, [PBS](7-storage-backup.md) covers that.
