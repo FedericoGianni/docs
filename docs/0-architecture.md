@@ -63,7 +63,7 @@ flowchart TB
                 OPENCLAW["OpenClaw<br/>{{ ip.openclaw }}"]
                 CHECKMK_SO["Checkmk<br/>{{ ip.checkmk_so }}"]
                 PVE_EXP_SO["PVE Exporter<br/>{{ ip.pve_exp_so }}"]
-                K3S_SO["Remote K3s node<br/>{{ ip.k3s_so }}"]
+                K3S_SO["k8s-single-node<br/>{{ ip.k3s_so }}"]
             end
 
             RPI3B["{{ hw.server4 }}<br/>{{ ip.rpi3b }}"]
