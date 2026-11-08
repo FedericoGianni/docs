@@ -34,6 +34,7 @@ theme:
 
 nav:
   - Home: index.md
+  - Architecture: 0-architecture.md
   - Hardware: 1-hardware.md
   - Hypervisor: 2-hypervisor.md
   - Network: 3-network.md
@@ -52,7 +53,7 @@ extra_css:
 
 extra_javascript:
   - https://unpkg.com/mermaid@12.2.0/dist/mermaid.min.js
-  - javascripts/mermaid-theme.js
+  - javascripts/mermaid-theme.js?v=2
   - javascripts/mermaid-zoom.js
 
 hooks:

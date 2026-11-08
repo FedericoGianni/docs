@@ -1,0 +1,108 @@
+# Architecture
+
+> Big picture first: sites, hosts, and workloads in one view.
+
+### Infrastructure architecture
+
+```mermaid
+flowchart TB
+    subgraph MAIN["MAIN SITE"]
+        direction TB
+
+        MAIN_WAN["{{ hw.brand_gateway }}<br/>Internet Gateway<br/>{{ ip.gateway }}"]
+        MAIN_ROUTER["{{ hw.brand_router }}<br/>Main Router + Switch<br/>{{ ip.router }}"]
+        MAIN_WAN ---|"WAN"| MAIN_ROUTER
+
+        NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
+        RPI5["{{ hw.server3 }}<br/>{{ ip.rpi5 }}"]
+
+        subgraph MAIN_PVE["Proxmox VE Cluster"]
+            direction LR
+
+            subgraph PVE1["pve1 · {{ hw.server1 }}<br/>{{ ip.node1 }}"]
+                PBS["PBS<br/>{{ ip.pbs }}"]
+                PVE_EXP["PVE Exporter<br/>{{ ip.pve_exp }}"]
+                M1["k8s-master-1<br/>{{ ip.m1 }}"]
+                W1["k8s-worker-1<br/>{{ ip.w1 }}"]
+            end
+
+            subgraph PVE2["pve2 · {{ hw.server1 }}<br/>{{ ip.node2 }}"]
+                M2["k8s-master-2<br/>{{ ip.m2 }}"]
+                W2["k8s-worker-2<br/>{{ ip.w2 }}"]
+                SURICATA["Suricata<br/>{{ ip.suricata }}"]
+                MINIO["MinIO<br/>{{ ip.minio }}"]
+            end
+
+            subgraph PVE3["pve3 · {{ hw.server1 }}<br/>{{ ip.node3 }}"]
+                M3["k8s-master-3<br/>{{ ip.m3 }}"]
+                W3["k8s-worker-3<br/>{{ ip.w3 }}"]
+                POSTGRES["PostgreSQL<br/>{{ ip.postgres }}"]
+                WAZUH["Wazuh<br/>{{ ip.wazuh }}"]
+            end
+
+            PVE1 ~~~ PVE2
+            PVE2 ~~~ PVE3
+        end
+
+        MAIN_ROUTER --- NAS
+        MAIN_ROUTER --- RPI5
+        MAIN_ROUTER --- MAIN_PVE
+    end
+
+    INTERNET(("Internet"))
+
+    subgraph REMOTE["REMOTE SITE"]
+        direction TB
+
+        REMOTE_ROUTER["{{ hw.router2 }}<br/>Remote Router"]
+
+        subgraph REMOTE_LAN["{{ net.lan_remote }}"]
+            direction TB
+
+            subgraph PVE4["pve4 · {{ hw.server2 }}<br/>{{ ip.node4 }}"]
+                OPENCLAW["OpenClaw<br/>{{ ip.openclaw }}"]
+                CHECKMK_SO["Checkmk<br/>{{ ip.checkmk_so }}"]
+                PVE_EXP_SO["PVE Exporter<br/>{{ ip.pve_exp_so }}"]
+                K3S_SO["Remote K3s node<br/>{{ ip.k3s_so }}"]
+            end
+
+            RPI3B["{{ hw.server4 }}<br/>{{ ip.rpi3b }}"]
+        end
+
+        REMOTE_ROUTER --- PVE4
+        REMOTE_ROUTER --- RPI3B
+    end
+
+    subgraph CLOUD["CLOUD"]
+        direction TB
+        OCI1["OCI 1<br/>{{ ip.oci1 }}"]
+        OCI2["OCI 2<br/>{{ ip.oci2 }}"]
+    end
+
+    MAIN_WAN --- INTERNET
+    INTERNET --- REMOTE_ROUTER
+    MAIN_ROUTER -.->|"VPN"| REMOTE_ROUTER
+    MAIN_ROUTER -.->|"VPN"| OCI1
+    MAIN_ROUTER -.->|"VPN"| OCI2
+
+    classDef baremetal stroke-width:2px
+    classDef vm stroke-width:1px
+    classDef lxc stroke-width:1px
+    classDef network stroke-width:2px
+
+    class NAS,RPI5,RPI3B baremetal
+    class M1,M2,M3,W1,W2,W3,SURICATA,WAZUH,OCI1,OCI2 vm
+    class PBS,PVE_EXP,MINIO,POSTGRES,OPENCLAW,CHECKMK_SO,PVE_EXP_SO,K3S_SO lxc
+    class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,INTERNET network
+```
+
+**Legend**
+
+<ul class="forbay-legend">
+  <li><span class="swatch baremetal"></span> Bare metal</li>
+  <li><span class="swatch vm"></span> Virtual machine</li>
+  <li><span class="swatch lxc"></span> Container</li>
+  <li><span class="swatch network"></span> Network device</li>
+</ul>
+
+See [Network](3-network.md) for the full network topology.

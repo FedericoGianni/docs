@@ -3,6 +3,76 @@
   margin: 1rem 0 1.5rem;
 }
 
+/* Mermaid node category colors — light theme */
+:root {
+  --forbay-bm-fill: #dbeafe;
+  --forbay-bm-stroke: #2563eb;
+  --forbay-bm-text: #1e3a8a;
+  --forbay-vm-fill: #dcfce7;
+  --forbay-vm-stroke: #16a34a;
+  --forbay-vm-text: #14532d;
+  --forbay-lxc-fill: #fef3c7;
+  --forbay-lxc-stroke: #d97706;
+  --forbay-lxc-text: #78350f;
+  --forbay-net-fill: #e5e7eb;
+  --forbay-net-stroke: #6b7280;
+  --forbay-net-text: #111827;
+}
+
+/* Mermaid node category colors — dark theme */
+[data-md-color-scheme="slate"] {
+  --forbay-bm-fill: #1e3a5f;
+  --forbay-bm-stroke: #60a5fa;
+  --forbay-bm-text: #dbeafe;
+  --forbay-vm-fill: #14532d;
+  --forbay-vm-stroke: #4ade80;
+  --forbay-vm-text: #dcfce7;
+  --forbay-lxc-fill: #452a05;
+  --forbay-lxc-stroke: #fbbf24;
+  --forbay-lxc-text: #fef3c7;
+  --forbay-net-fill: #374151;
+  --forbay-net-stroke: #9ca3af;
+  --forbay-net-text: #f3f4f6;
+}
+
+.forbay-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0.5rem 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+.forbay-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 0.85rem;
+}
+.forbay-legend .swatch {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 0.2rem;
+  border: 2px solid;
+}
+.forbay-legend .swatch.baremetal {
+  background: var(--forbay-bm-fill);
+  border-color: var(--forbay-bm-stroke);
+}
+.forbay-legend .swatch.vm {
+  background: var(--forbay-vm-fill);
+  border-color: var(--forbay-vm-stroke);
+}
+.forbay-legend .swatch.lxc {
+  background: var(--forbay-lxc-fill);
+  border-color: var(--forbay-lxc-stroke);
+}
+.forbay-legend .swatch.network {
+  background: var(--forbay-net-fill);
+  border-color: var(--forbay-net-stroke);
+}
+
 .mermaid-tools {
   display: flex;
   justify-content: flex-end;

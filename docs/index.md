@@ -8,6 +8,8 @@ search:
 This is the central documentation for my homelab.
 
 ---
+- [Architecture](0-architecture.md)
+    Infrastructure overview combining network and deployment.
 - [Hardware](1-hardware.md)
     Overview of servers, storage, and peripherals.
 - [Hypervisor](2-hypervisor.md)
