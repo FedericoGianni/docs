@@ -1,6 +1,6 @@
 # Architecture
 
-> Big picture first: sites, hosts, and workloads in one view.
+> One map of every site, host, and workload.
 
 ### Infrastructure architecture
 
@@ -55,6 +55,7 @@ flowchart TB
         direction TB
 
         REMOTE_ROUTER["{{ hw.router2 }}<br/>Remote Router"]
+        REMOTE_SWITCH["{{ hw.switch1 }}<br/>Switch"]
 
         subgraph REMOTE_LAN["{{ net.lan_remote }}"]
             direction TB
@@ -69,8 +70,8 @@ flowchart TB
             RPI3B["{{ hw.server4 }}<br/>{{ ip.rpi3b }}"]
         end
 
-        REMOTE_ROUTER --- PVE4
-        REMOTE_ROUTER --- RPI3B
+        REMOTE_ROUTER --- REMOTE_SWITCH
+        REMOTE_SWITCH --- REMOTE_LAN
     end
 
     subgraph CLOUD["CLOUD"]
@@ -93,7 +94,7 @@ flowchart TB
     class NAS,RPI5,RPI3B baremetal
     class M1,M2,M3,W1,W2,W3,SURICATA,WAZUH,OCI1,OCI2 vm
     class PBS,PVE_EXP,MINIO,POSTGRES,OPENCLAW,CHECKMK_SO,PVE_EXP_SO,K3S_SO lxc
-    class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,INTERNET network
+    class MAIN_WAN,MAIN_ROUTER,REMOTE_ROUTER,REMOTE_SWITCH,INTERNET network
 ```
 
 **Legend**
