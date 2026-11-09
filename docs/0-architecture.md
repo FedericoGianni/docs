@@ -14,11 +14,6 @@ flowchart TB
         MAIN_ROUTER --- SWITCH
         MAIN_WAN ~~~ MAIN_PVE
 
-        %% Invisible bottom-row anchor keeps the main site spanning the diagram width.
-        MAIN_SPACER[" "]:::invisible
-        NAS ~~~ MAIN_SPACER
-        SBC_MAIN ~~~ MAIN_SPACER
-
         NAS["{{ hw.nas1 }}<br/>NAS<br/>{{ ip.nas }}"]
         SBC_MAIN["{{ hw.server3 }}<br/>{{ ip.sbc_main }}"]
 
@@ -105,16 +100,15 @@ flowchart TB
     INTERNET --- REMOTE_ROUTER
     INTERNET --- CLOUD
     
-    PVE4 -.->|"VPN"| MAIN_ROUTER
-    SBC_REMOTE -.->|"VPN"| MAIN_ROUTER
-    OCI1 -.->|"VPN"| MAIN_ROUTER
-    OCI2 -.->|"VPN"| MAIN_ROUTER
+    PVE4 -.->|"VPN"| INTERNET
+    SBC_REMOTE -.->|"VPN"| INTERNET
+    OCI1 -.->|"VPN"| INTERNET
+    OCI2 -.->|"VPN"| INTERNET
 
     classDef baremetal stroke-width:2px
     classDef vm stroke-width:1px
     classDef lxc stroke-width:1px
     classDef network stroke-width:2px
-    classDef invisible fill:transparent,stroke:transparent,color:transparent
 
     class NAS,SBC_MAIN,SBC_REMOTE baremetal
     class M1,M2,M3,W1,W2,W3,SURICATA,WAZUH,OCI1,OCI2 vm
