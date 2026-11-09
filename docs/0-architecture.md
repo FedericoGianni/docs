@@ -95,15 +95,17 @@ flowchart TB
 
     %% Main site on top, Internet in the middle, smaller sites in one row below.
     MAIN_WAN --- INTERNET
-    %% Invisible rank link: centers the Internet node and widens the main site.
-    INTERNET ~~~ NAS
+    %% Invisible rank links keep the main site full-width with the VPN arrows on the gateway.
+    INTERNET ~~~ MAIN_PVE
+    INTERNET ~~~ SBC_MAIN
+    INTERNET ~~~ PVE1
     INTERNET --- REMOTE_ROUTER
     INTERNET --- CLOUD
     
-    PVE4 -.->|"VPN"| INTERNET
-    SBC_REMOTE -.->|"VPN"| INTERNET
-    OCI1 -.->|"VPN"| INTERNET
-    OCI2 -.->|"VPN"| INTERNET
+    PVE4 -.->|"VPN"| MAIN_WAN
+    SBC_REMOTE -.->|"VPN"| MAIN_WAN
+    OCI1 -.->|"VPN"| MAIN_WAN
+    OCI2 -.->|"VPN"| MAIN_WAN
 
     classDef baremetal stroke-width:2px
     classDef vm stroke-width:1px
